@@ -20,7 +20,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     entry_points={
-        'console_scripts': ['dockerize=app.dockerizer:dockerize'],
+        'console_scripts': ['dockerize=django_dockerizer.dockerizer:dockerize'],
     },
     python_requires=">=3.8",
 )
