@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="django_dockerizer",
-    version="0.2",
+    version="0.2.1",
     description="Dockerize and make ready to deploy Django projects",
     packages=find_packages(),
     long_description=long_description,
