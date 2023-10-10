@@ -1,11 +1,26 @@
-# Django dockerizer
-A package used to dockerize and make ready Django projects to deploy.
+from setuptools import find_packages, setup
 
-## How to use
-_After installing the package use following command in base project directory:_ <br>
+with open("README.md", "r") as f:
+    long_description = f.read()
 
-**dockerize**
-
-_If you want to use celery and redis then use following command:_
-
-**dockerize --celery<br>**
+setup(
+    name="django_dockerizer",
+    version="0.2",
+    description="Dockerize and make ready to deploy Django projects",
+    packages=find_packages(),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/arifogluisa/django-dockerizer",
+    author="Isa Arifoglu",
+    author_email="arifogluisa@gmail.com",
+    license="MIT",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.8",
+        "Operating System :: OS Independent",
+    ],
+    entry_points={
+        'console_scripts': ['dockerize=django_dockerizer.dockerizer:dockerize'],
+    },
+    python_requires=">=3.8",
+)
