@@ -1,10 +1,9 @@
 from .utils import PROJECT_NAME, generate_or_retrieve_passwords
 
-
 # Retrieve or generate passwords
 DB_PASS, REDIS_PASS = generate_or_retrieve_passwords()
 
-ENV_TYPES = ('dev', 'prod')
+ENV_TYPES = ("dev", "prod")
 
 DOCKERFILE_DEV = """FROM python:3.10
 ENV PYTHONUNBUFFERED 1
@@ -38,8 +37,8 @@ RUN apt-get update && \\
   && pip install --no-cache-dir -r requirements.txt \\
   && apt-get clean --dry-run
 
-COPY ../mime.types /etc/mime.types
-COPY ../uwsgi.ini /conf/uwsgi.ini
+COPY ./mime.types /etc/mime.types
+COPY ./uwsgi.ini /conf/uwsgi.ini
 COPY ../.. /code
 
 # Start uWSGI
@@ -268,7 +267,7 @@ services:
 
   app:
     container_name: app
-    build: ../..
+    build: .
     restart: "always"
     env_file: .env
     environment:
@@ -408,8 +407,8 @@ http {
 """
 
 DEV_ENV = f"""# PostgreSQL
-POSTGRES_DB=default
-POSTGRES_USER=db_user
+POSTGRES_DB={PROJECT_NAME}_db
+POSTGRES_USER={PROJECT_NAME}_user
 POSTGRES_PASSWORD={DB_PASS}
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
@@ -419,8 +418,8 @@ DEBUG=True
 """
 
 DEV_ENV_WITH_CELERY = f"""# PostgreSQL
-POSTGRES_DB=default
-POSTGRES_USER=db_user
+POSTGRES_DB={PROJECT_NAME}_db
+POSTGRES_USER={PROJECT_NAME}_user
 POSTGRES_PASSWORD={DB_PASS}
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
@@ -438,8 +437,8 @@ CELERY_BACKEND=redis://redis:6379/0
 """
 
 PROD_ENV = f"""# PostgreSQL
-POSTGRES_DB=default
-POSTGRES_USER=db_user
+POSTGRES_DB={PROJECT_NAME}_db
+POSTGRES_USER={PROJECT_NAME}_user
 POSTGRES_PASSWORD={DB_PASS}
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
@@ -449,8 +448,8 @@ DEBUG=False
 """
 
 PROD_ENV_WITH_CELERY = f"""# PostgreSQL
-POSTGRES_DB=default
-POSTGRES_USER=db_user
+POSTGRES_DB={PROJECT_NAME}_db
+POSTGRES_USER={PROJECT_NAME}_user
 POSTGRES_PASSWORD={DB_PASS}
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
@@ -515,7 +514,6 @@ else:
 """
 
 SINGLE_FILES = (
-    ('uwsgi.ini', UWSGI),
-    ('mime.types', MIME_TYPES),
-    ('nginx.conf', NGINX_CONF),
+    ("uwsgi.ini", UWSGI),
+    ("mime.types", MIME_TYPES),
 )
