@@ -9,7 +9,11 @@ BASE_DIR = os.getcwd()
 def find_django_project_name():
     for root, dirs, files in os.walk(BASE_DIR):
         if "settings.py" in files:
-            return os.path.basename(root), root
+            settings_path = os.path.join(root, "settings.py")
+            with open(settings_path, 'r') as file:
+                contents = file.read()
+                if 'django.contrib' in contents:
+                    return os.path.basename(root), root
     raise Exception("Could not find Django project name")
 
 
